@@ -1,14 +1,11 @@
 package uzuzjmd.competence.liferay.reflexion;
 
 import java.io.Serializable;
-import java.lang.reflect.InvocationTargetException;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
-
-import org.apache.commons.beanutils.BeanUtils;
 
 import uzuzjmd.competence.shared.ReflectiveAssessmentsListHolder;
 import uzuzjmd.competence.shared.SuggestedCompetenceColumn;
