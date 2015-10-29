@@ -34,19 +34,29 @@
 						id="addLearningGoalButton">
 					</p:commandButton>
 					<div class="flexiflex" id="test:createLearningGoalPanel">
-						<p:outputLabel for="autocomplete"
-							value="Wählen Sie neue Lernprojekte!"></p:outputLabel>
-						<p:autoComplete maxResults="10" id="autocomplete"
-							value="#{LearningTemplates.selectedCompetence}"
-							completeMethod="#{LearningTemplatesFullSet.complete}"
-							dropdown="true" validator="#{learningTemplateValidator.validate}"
-							validatorMessage="Dieses Lernziel ist nicht vorhanden!" />
-						<p:commandButton value="speichern" id="saveLearningGoal"
-							actionListener="#{LearningTemplates.addTemplate}">
-							<f:ajax render="@form" />
-						</p:commandButton>
-						<p:commandButton value="abbrechen" id="cancelCreatingLearningGoal">
-						</p:commandButton>
+						<div class="ui-grid ui-grid-responsive"> 
+							<div class="ui-row">
+								<p:outputLabel for="autocomplete"
+									value="Wählen Sie neue Lernprojekte!"></p:outputLabel>
+								<p:autoComplete maxResults="10" id="autocomplete"
+									value="#{LearningTemplates.selectedCompetence}"
+									completeMethod="#{LearningTemplatesFullSet.complete}"
+									dropdown="true" validator="#{learningTemplateValidator.validate}"
+									required="true" 
+									validatorMessage="Dieses Lernziel ist nicht vorhanden!">
+									 <p:ajax event="itemSelect" update="saveLearningGoal" />  
+								</p:autoComplete>
+							</div>
+							<div class="ui-row">
+								<p:commandButton value="speichern" id="saveLearningGoal"
+									actionListener="#{LearningTemplates.addTemplate}" update="learningProjectForm"
+									disabled="#{ empty LearningTemplates.selectedCompetence}">
+									<f:ajax render="@form" />
+								</p:commandButton>
+								<p:commandButton value="abbrechen" id="cancelCreatingLearningGoal">
+								</p:commandButton>
+							</div>
+						</div>
 					</div>
 				</h:form>
 			</p:tab>
