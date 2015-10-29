@@ -45,7 +45,7 @@ public class LearningTemplatesFullSet implements Serializable{
 	public List<String> complete(String query) {
 		List<String> result = new ArrayList<String>();
 //		_log.debug("auto-completing");
-		Collection<String> tmp = Collections2.filter(learningTemplates, Predicates.containsPattern(query));	
+		Collection<String> tmp = Collections2.filter(getNotSelectedTemplate(), Predicates.containsPattern(query));	
 		result.addAll(tmp);
 		return result;		
 	}
@@ -61,8 +61,27 @@ public class LearningTemplatesFullSet implements Serializable{
 				.get(StringList.class);
 		for (String template : result.getData()) {
 			learningTemplates.add(template);
-		}				
+		}
 	}
 
-
+	private List<String> getNotSelectedTemplate() {
+		final List<String> notSelectedTemplates = new ArrayList<String>();
+		try {
+			List<String> selectedTemplates = SelectedLearningTemplateDAO.findAll()
+					.getData();
+			
+			if(selectedTemplates == null) {
+				return learningTemplates;
+			}
+			
+			for (String template : learningTemplates) {
+				if(!selectedTemplates.contains(template)) {
+					notSelectedTemplates.add(template);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return notSelectedTemplates;
+	}
 }

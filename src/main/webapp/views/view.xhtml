@@ -16,11 +16,13 @@
 
 
 				<h:form id="learningProjectForm">
-					<p:dataList var="learningProject"
+					<p:dataTable var="learningProject" id="learningProjectDataList"
 						value="#{LearningTemplates.learningTemplates}" paginator="true"
 						rows="10" type="definition">
-						<div class="flexiflex">
+						<p:column headerText="">
 							<p:outputLabel value="#{learningProject}"></p:outputLabel>
+						</p:column>
+						<p:column headerText="">
 							<p:commandButton icon="ui-icon-extlink" value="bearbeiten"
 								id="bearbeiten_button" disabled="true">
 								<f:attribute name="learningProject" value="#{learningProject}" />
@@ -28,8 +30,8 @@
 							<p:commandButton icon="ui-icon-minusthick" value="löschen"
 								action="#{LearningTemplates.deleteTemplate1(learningProject)}">
 							</p:commandButton>
-						</div>
-					</p:dataList>
+						</p:column>	
+					</p:dataTable>
 					<p:commandButton icon="ui-icon-plus" value="hinzufügen"
 						id="addLearningGoalButton">
 					</p:commandButton>
@@ -49,9 +51,9 @@
 							</div>
 							<div class="ui-row">
 								<p:commandButton value="speichern" id="saveLearningGoal"
-									actionListener="#{LearningTemplates.addTemplate}" update="learningProjectForm"
+									actionListener="#{LearningTemplates.addTemplate}" 
+									update="learningProjectDataList" ajax="false"
 									disabled="#{ empty LearningTemplates.selectedCompetence}">
-									<f:ajax render="@form" />
 								</p:commandButton>
 								<p:commandButton value="abbrechen" id="cancelCreatingLearningGoal">
 								</p:commandButton>
