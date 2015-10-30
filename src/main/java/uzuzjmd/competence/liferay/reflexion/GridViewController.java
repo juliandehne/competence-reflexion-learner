@@ -48,6 +48,10 @@ public class GridViewController implements Serializable{
 	public void handleChange() {
 		SuggestedCompetenceGridDAO.updateReflexion(getHolder());
 	}
+	
+	public void refreshView() {
+		setHolder(null);
+	}
 
 	@PostConstruct
 	public void init() {

@@ -77,13 +77,14 @@
 				<H4>Lernprojekte</H4>
 
 				<h:form id="learningProjectGridForm">
+				<p:panel id="learningProjectGridPanel">
 					<div id="learningTemplateSelection">
 						<p:selectOneMenu header="Lernprojekte"
 							value="#{LearningTemplates.selectedLearningTemplate}"
 							id="selectLearningTemplateMenu">
 							<f:selectItems value="#{LearningTemplates.learningTemplates}" />
 							<f:selectItem itemLabel="test" itemValue="test"></f:selectItem>
-							<f:ajax render="@form" />
+							<p:ajax update="learningProjectGridPanel" listener="#{GridViewController.refreshView}"/>
 						</p:selectOneMenu>
 					</div>
 
@@ -183,6 +184,7 @@
 								</ui:repeat>
 							</div>
 						</p:panel>
+				</p:panel>
 				</h:form>
 			</p:tab>
 		</p:tabView>

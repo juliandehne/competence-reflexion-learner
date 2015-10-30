@@ -13,6 +13,7 @@ import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientHandlerException;
 import com.sun.jersey.api.client.UniformInterfaceException;
 import com.sun.jersey.api.client.WebResource;
+import com.sun.jersey.api.client.filter.LoggingFilter;
 
 public class SuggestedCompetenceGridDAO {
 
@@ -63,6 +64,7 @@ public class SuggestedCompetenceGridDAO {
 		System.out.println("updating: " + holder.getSuggestedMetaCompetence());
 
 		Client client = com.sun.jersey.api.client.Client.create();
+		client.addFilter(new LoggingFilter(System.out));
 		WebResource webResource = client.resource(SOAUtil.getRestserverUrl()
 				+ "/competences/xml/learningtemplates/gridview/update");
 		try {
@@ -73,6 +75,7 @@ public class SuggestedCompetenceGridDAO {
 							ContextUtil.getGroup().getGroupId() + "")
 					.type(MediaType.APPLICATION_XML).accept(MediaType.APPLICATION_XML)
 					.post(ReflectiveAssessmentsListHolder.class, holder);
+			
 		} catch (UniformInterfaceException e) {
 			e.printStackTrace();
 		} catch (ClientHandlerException e) {
