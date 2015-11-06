@@ -12,7 +12,8 @@ public class SOAUtil {
 	 */
 	public static String getRestserverUrl() {
 
-		return "http://fleckenroller.cs.uni-potsdam.de/app/competence-servlet/competence";
+		return "http://localhost:8084";
+//		return "http://fleckenroller.cs.uni-potsdam.de/app/competence-servlet/competence";
 //		try {
 //			String competenceRestServerUrl = GetterUtil.getString(PortletProps
 //					.get("competenceRestServerUrl"));

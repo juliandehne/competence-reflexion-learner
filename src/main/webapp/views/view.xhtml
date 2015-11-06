@@ -11,6 +11,7 @@
 		<!-- 		<h:outputText value="#{i18n['Competence-Reflexion-hello-world']}" /> -->
 
 		<p:tabView id="tabViewWidget">
+
 			<p:tab id="lernprojects" title="Lernprojekte">
 				<H1>Meine Lernprojekte</H1>
 
@@ -27,9 +28,9 @@
 								id="bearbeiten_button" disabled="true">
 								<f:attribute name="learningProject" value="#{learningProject}" />
 							</p:commandButton>
-							<p:commandButton icon="ui-icon-minusthick" value="löschen"
-								action="#{LearningTemplates.deleteTemplate1(learningProject)}">
-							</p:commandButton>
+							<p:commandButton icon="ui-icon-minusthick" value="löschen" process="@this"
+								update="learningProjectDataList"
+								action="#{LearningTemplates.deleteTemplate1(learningProject)}" />
 						</p:column>	
 					</p:dataTable>
 					<p:commandButton icon="ui-icon-plus" value="hinzufügen"
@@ -52,7 +53,7 @@
 							<div class="ui-row">
 								<p:commandButton value="speichern" id="saveLearningGoal"
 									actionListener="#{LearningTemplates.addTemplate}" 
-									update="learningProjectDataList" ajax="false"
+									update="learningProjectDataList" process="@this" ajax="true"
 									disabled="#{ empty LearningTemplates.selectedCompetence}">
 								</p:commandButton>
 								<p:commandButton value="abbrechen" id="cancelCreatingLearningGoal">
@@ -62,8 +63,6 @@
 					</div>
 				</h:form>
 			</p:tab>
-
-
 
 
 			<!-- 			new Tab           -->
@@ -79,11 +78,11 @@
 				<h:form id="learningProjectGridForm">
 				<p:panel id="learningProjectGridPanel">
 					<div id="learningTemplateSelection">
-						<p:selectOneMenu header="Lernprojekte"
+						<p:selectOneMenu header="Lernprojekte" 
 							value="#{LearningTemplates.selectedLearningTemplate}"
 							id="selectLearningTemplateMenu">
 							<f:selectItems value="#{LearningTemplates.learningTemplates}" />
-							<f:selectItem itemLabel="test" itemValue="test"></f:selectItem>
+<!-- 							<f:selectItem itemLabel="test" itemValue="test"></f:selectItem> -->
 							<p:ajax update="learningProjectGridPanel" listener="#{GridViewController.refreshView}"/>
 						</p:selectOneMenu>
 					</div>

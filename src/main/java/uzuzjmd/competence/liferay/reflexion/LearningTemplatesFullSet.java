@@ -67,7 +67,7 @@ public class LearningTemplatesFullSet implements Serializable{
 	private List<String> getNotSelectedTemplate() {
 		final List<String> notSelectedTemplates = new ArrayList<String>();
 		try {
-			List<String> selectedTemplates = SelectedLearningTemplateDAO.findAll()
+			final List<String> selectedTemplates = SelectedLearningTemplateDAO.findAll()
 					.getData();
 			
 			if(selectedTemplates == null) {

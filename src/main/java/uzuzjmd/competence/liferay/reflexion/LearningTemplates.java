@@ -52,6 +52,7 @@ public class LearningTemplates implements Serializable {
 			List<String> selectedTemplates = SelectedLearningTemplateDAO.findAll()
 					.getData();
 			if (selectedTemplates != null) {
+				learningTemplates.clear();
 				learningTemplates.addAll(selectedTemplates);
 				if (!selectedTemplates.isEmpty()) {
 					SuggestedCompetenceGrid data = SuggestedCompetenceGridDAO
