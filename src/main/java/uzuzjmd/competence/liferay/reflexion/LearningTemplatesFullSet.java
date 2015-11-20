@@ -6,8 +6,10 @@ import java.util.Collection;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.ws.rs.core.MediaType;
 
 import uzuzjmd.competence.liferay.util.SOAUtil;
@@ -47,6 +49,10 @@ public class LearningTemplatesFullSet implements Serializable{
 //		_log.debug("auto-completing");
 		Collection<String> tmp = Collections2.filter(getNotSelectedTemplate(), Predicates.containsPattern(query));	
 		result.addAll(tmp);
+		
+		if(result.size() == 0) {
+			FacesContext.getCurrentInstance().addMessage( "autocompleteMessage", new FacesMessage(FacesMessage.SEVERITY_INFO, "Info: ", "Es gibt kein Lernprojekt,den Sie auswählen können!"));
+		}
 		return result;		
 	}
 	

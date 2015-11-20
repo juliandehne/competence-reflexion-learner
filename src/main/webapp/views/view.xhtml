@@ -9,14 +9,17 @@
 	<h:head />
 	<h:body>
 		<!-- 		<h:outputText value="#{i18n['Competence-Reflexion-hello-world']}" /> -->
-
-		<p:tabView id="tabViewWidget">
-
-			<p:tab id="lernprojects" title="Lernprojekte">
-				<H1>Meine Lernprojekte</H1>
-
-
-				<h:form id="learningProjectForm">
+		<h:form id="learningProjectForm">
+			 
+			<p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+			     <img src="http://www.ajaxload.info/images/exemples/19.gif" > </img>
+			</p:dialog>
+			
+			<p:tabView id="learningProjectTabView">
+				<p:ajax event="tabChange" update="learningProjectTabView" listener="#{LearningTemplates.onTabChange}" 
+					onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()"/>
+				<p:tab id="LernprojekteTab" title="Lernprojekte">
+					<H1>Meine Lernprojekte</H1>
 					<p:dataTable var="learningProject" id="learningProjectDataList"
 						value="#{LearningTemplates.learningTemplates}" paginator="true"
 						rows="10" type="definition">
@@ -25,7 +28,7 @@
 						</p:column>
 						<p:column headerText="">
 							<p:commandButton icon="ui-icon-extlink" value="bearbeiten"
-								id="bearbeiten_button" disabled="true">
+								disabled="true">
 								<f:attribute name="learningProject" value="#{learningProject}" />
 							</p:commandButton>
 							<p:commandButton icon="ui-icon-minusthick" value="löschen" process="@this"
@@ -33,10 +36,12 @@
 								action="#{LearningTemplates.deleteTemplate1(learningProject)}" />
 						</p:column>	
 					</p:dataTable>
-					<p:commandButton icon="ui-icon-plus" value="hinzufügen"
-						id="addLearningGoalButton">
-					</p:commandButton>
-					<div class="flexiflex" id="test:createLearningGoalPanel">
+					<p:button icon="ui-icon-plus" value="hinzufügen" onclick="return false">
+						<p:effect type="fade" event="click" for="LearningGoalPanelField">
+							<f:param name="mode" value="'show'" />
+						</p:effect>
+					</p:button>
+					<h:panelGroup layout="block" id="LearningGoalPanelField" style="display:none">
 						<div class="ui-grid ui-grid-responsive"> 
 							<div class="ui-row">
 								<p:outputLabel for="autocomplete"
@@ -45,10 +50,10 @@
 									value="#{LearningTemplates.selectedCompetence}"
 									completeMethod="#{LearningTemplatesFullSet.complete}"
 									dropdown="true" validator="#{learningTemplateValidator.validate}"
-									required="true" 
 									validatorMessage="Dieses Lernziel ist nicht vorhanden!">
-									 <p:ajax event="itemSelect" update="saveLearningGoal" />  
+									 <p:ajax event="itemSelect" update="saveLearningGoal" />
 								</p:autoComplete>
+								<p:messages id="autocompleteMessage" showDetail="true" autoUpdate="true" closable="true" />
 							</div>
 							<div class="ui-row">
 								<p:commandButton value="speichern" id="saveLearningGoal"
@@ -56,136 +61,135 @@
 									update="learningProjectDataList" process="@this" ajax="true"
 									disabled="#{ empty LearningTemplates.selectedCompetence}">
 								</p:commandButton>
-								<p:commandButton value="abbrechen" id="cancelCreatingLearningGoal">
-								</p:commandButton>
+								<p:button value="abbrechen" onclick="return false" style="margin-left:5px;">
+									<p:effect type="fade" event="click" for="LearningGoalPanelField">
+										<f:param name="mode" value="'hide'" />
+									</p:effect>
+								</p:button>
 							</div>
 						</div>
-					</div>
-				</h:form>
-			</p:tab>
+					</h:panelGroup>
+				</p:tab>
+				
+				
+				<p:tab id="learningProjectGridTab" title="Selbsteinschätzung">
+					<H1>Selbsteinschätzung</H1>
 
-
-			<!-- 			new Tab           -->
-
-
-
-			<p:tab title="Selbsteinschätzung">
-				<H1>Selbsteinschätzung</H1>
-
-				<!-- 		Hier wird das Dropdown für die Lernprojekte konfiguriert -->
-				<H4>Lernprojekte</H4>
-
-				<h:form id="learningProjectGridForm">
-				<p:panel id="learningProjectGridPanel">
-					<div id="learningTemplateSelection">
-						<p:selectOneMenu header="Lernprojekte" 
-							value="#{LearningTemplates.selectedLearningTemplate}"
-							id="selectLearningTemplateMenu">
-							<f:selectItems value="#{LearningTemplates.learningTemplates}" />
-<!-- 							<f:selectItem itemLabel="test" itemValue="test"></f:selectItem> -->
-							<p:ajax update="learningProjectGridPanel" listener="#{GridViewController.refreshView}"/>
-						</p:selectOneMenu>
-					</div>
-
-					<!-- 		Hier wird das Kompetenzraster angezeigt -->
-					<p:scrollPanel mode="native" style="width:100%;height:100%" id="competencenGridView">
-						<div class="table-responsive" id="suggestedCompetenceGrid">
-
-							<table class="table table-bordered table-hover table-condensed">
-
-								<thead>
-									<tr>
-										<th>#</th>
-										<th>Kompetenze:</th>
-										<ui:repeat var="suggestedCompetenceColumn"
-											value="#{LearningTemplates.suggestedCompetenceGrid.suggestedCompetenceRows[0].suggestedCompetenceColumns}"
-											varStatus="varStatus">
-											<th>Niveau #{varStatus.index +1}</th>
-										</ui:repeat>
-									</tr>
-								</thead>
-
-								<ui:repeat var="suggestedCompetenceRow"
-									value="#{LearningTemplates.suggestedCompetenceGrid.suggestedCompetenceRows}"
-									id="gridView" varStatus="varStatus">
-									<f:event type="preRenderView"
-										listener="#{LearningTemplates.updateGrid}" />
-									<tr>
-										<td>#{varStatus.index +1}</td>
-										<td><h:outputText class="suggestedCompetenceRowHeader}"
-												value="#{suggestedCompetenceRow.suggestedCompetenceRowHeader}"></h:outputText>
-										</td>
-
-										<ui:repeat var="suggestedCompetenceColumn"
-											value="#{suggestedCompetenceRow.suggestedCompetenceColumns}">
-											<!-- 										<span class="icon-arrow-right"></span> -->
-											<td><p:commandLink
-													action="#{GridViewController.update(suggestedCompetenceColumn)}"
-													update="@(.reflexionSelection)">
-													<div class="suggestedCompetenceCluster">
-														<h:outputText class="competenceGridEntry"
-															value="#{suggestedCompetenceColumn.testOutput}" />
-														<p:progressBar
-															value="#{suggestedCompetenceColumn.progressInPercent}"
-															labelTemplate="#{suggestedCompetenceColumn.progressInPercent}%"
-															displayOnly="true" style="width:80px"></p:progressBar>
-													</div>
-												</p:commandLink></td>
-										</ui:repeat>
-									</tr>
-								</ui:repeat>
-
-							</table>
-						</div>
-					</p:scrollPanel>
-
-					<p:remoteCommand name="updateCompetenceView" update="competencenGridView" />
+					<!-- 		Hier wird das Dropdown für die Lernprojekte konfiguriert -->
+					<H4>Lernprojekte</H4>
 					
-					<!-- Hier werden bei Button-Click dynamisch Assessment-Fragen angezeigt process="@(.reflexionSelection)" -->
-						<p:panel id="reflexionSelection" styleClass="reflexionSelection">
-							<div id="assessmentsForSelected" class="ui-grid ui-grid-responsive">
-								<H2>#{GridViewController.holder.suggestedMetaCompetence}</H2>
-								<br />
-								<ui:repeat var="reflectiveAssessment"
-									value="#{GridViewController.holder.reflectiveAssessmentList}">
-									<div class="flexiflex ui-grid-row" style="margin: auto;">
-										<div class="ui-grid-col-7">
-											<p:outputLabel for="assessmentRadio"
-												value="#{reflectiveAssessment.competenceDescription}"></p:outputLabel>
-										</div>
-										<div class="ui-grid-col-5" style="padding-left: 5px;">
-										<p:selectOneRadio id="assessmentRadio"
-											value="#{reflectiveAssessment.assessment}">
-											<p:ajax event="change" oncomplete="updateCompetenceView()"
-												listener="#{GridViewController.handleChange}"/>
-											<f:selectItem
-												itemLabel="#{GridViewController.holder.assessment.items[0]}"
-												itemValue="#{GridViewController.holder.assessment.items[0]}" />
-											<f:selectItem
-												itemLabel="#{GridViewController.holder.assessment.items[1]}"
-												itemValue="#{GridViewController.holder.assessment.items[1]}" />
-											<f:selectItem
-												itemLabel="#{GridViewController.holder.assessment.items[2]}"
-												itemValue="#{GridViewController.holder.assessment.items[2]}" />
-											<f:selectItem
-												itemLabel="#{GridViewController.holder.assessment.items[3]}"
-												itemValue="#{GridViewController.holder.assessment.items[3]}" />
-										</p:selectOneRadio>
-										<p:selectBooleanCheckbox
-											value="#{reflectiveAssessment.isLearningGoal}">
-											<p:ajax event="change"
-												listener="#{GridViewController.handleChange}" />
-										</p:selectBooleanCheckbox>
-										<h:outputText value="Lernziel?" />
-										</div>
-									</div>
-									<br />
-								</ui:repeat>
+					<p:panel id="learningProjectGridPanel">
+						<div id="learningTemplateSelection">
+							<p:selectOneMenu header="Lernprojekte"
+								value="#{LearningTemplates.selectedLearningTemplate}"
+								id="selectLearningTemplateMenu">
+								<f:selectItems value="#{LearningTemplates.learningTemplates}" />
+	<!-- 							<f:selectItem itemLabel="test" itemValue="test"></f:selectItem> -->
+								<p:ajax update="learningProjectGridPanel" listener="#{GridViewController.refreshView}"/>
+								<p:ajax update="learningProjectGridPanel" listener="#{LearningTemplates.handleChange}"/>
+							</p:selectOneMenu>
+						</div>
+
+						<!-- 		Hier wird das Kompetenzraster angezeigt -->
+						<p:scrollPanel mode="native" style="width:100%;height:100%" id="competencenGridView">
+							<div class="table-responsive" id="suggestedCompetenceGrid">
+
+								<table class="table table-bordered table-hover table-condensed">
+
+									<thead>
+										<tr>
+											<th>#</th>
+											<th>Kompetenze:</th>
+											<ui:repeat var="suggestedCompetenceColumn"
+												value="#{LearningTemplates.suggestedCompetenceGrid.suggestedCompetenceRows[0].suggestedCompetenceColumns}"
+												varStatus="varStatus">
+												<th>Niveau #{varStatus.index +1}</th>
+											</ui:repeat>
+										</tr>
+									</thead>
+
+									<ui:repeat var="suggestedCompetenceRow"
+										value="#{LearningTemplates.suggestedCompetenceGrid.suggestedCompetenceRows}"
+										id="gridView" varStatus="varStatus">
+										<f:event type="preRenderView"
+											listener="#{LearningTemplates.updateGrid}" />
+										<tr>
+											<td>#{varStatus.index +1}</td>
+											<td><h:outputText class="suggestedCompetenceRowHeader}"
+													value="#{suggestedCompetenceRow.suggestedCompetenceRowHeader}"></h:outputText>
+											</td>
+
+											<ui:repeat var="suggestedCompetenceColumn"
+												value="#{suggestedCompetenceRow.suggestedCompetenceColumns}">
+												<!-- 										<span class="icon-arrow-right"></span> -->
+												<td><p:commandLink
+														action="#{GridViewController.update(suggestedCompetenceColumn)}"
+														update="@(.reflexionSelection)">
+														<div class="suggestedCompetenceCluster">
+															<h:outputText class="competenceGridEntry"
+																value="#{suggestedCompetenceColumn.testOutput}" />
+															<p:progressBar
+																value="#{suggestedCompetenceColumn.progressInPercent}"
+																labelTemplate="#{suggestedCompetenceColumn.progressInPercent}%"
+																displayOnly="true" style="width:80px"></p:progressBar>
+														</div>
+													</p:commandLink></td>
+											</ui:repeat>
+										</tr>
+									</ui:repeat>
+
+								</table>
 							</div>
-						</p:panel>
-				</p:panel>
-				</h:form>
-			</p:tab>
-		</p:tabView>
+						</p:scrollPanel>
+
+						<p:remoteCommand name="updateCompetenceView" update="competencenGridView" actionListener="#{LearningTemplates.handleChange}"
+							onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()"/>
+						
+						<!-- Hier werden bei Button-Click dynamisch Assessment-Fragen angezeigt process="@(.reflexionSelection)" -->
+							<p:panel id="reflexionSelection" styleClass="reflexionSelection">
+								<div id="assessmentsForSelected" class="ui-grid ui-grid-responsive">
+									<H2>#{GridViewController.holder.suggestedMetaCompetence}</H2>
+									<br />
+									<ui:repeat var="reflectiveAssessment"
+										value="#{GridViewController.holder.reflectiveAssessmentList}">
+										<div class="flexiflex ui-grid-row" style="margin: auto;">
+											<div class="ui-grid-col-7">
+												<p:outputLabel for="assessmentRadio"
+													value="#{reflectiveAssessment.competenceDescription}"></p:outputLabel>
+											</div>
+											<div class="ui-grid-col-5" style="padding-left: 5px;">
+											<p:selectOneRadio id="assessmentRadio"
+												value="#{reflectiveAssessment.assessment}">
+												<p:ajax event="change" oncomplete="updateCompetenceView()"
+													listener="#{GridViewController.handleChange}" onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()"/>
+												<f:selectItem
+													itemLabel="#{GridViewController.holder.assessment.items[0]}"
+													itemValue="#{GridViewController.holder.assessment.items[0]}" />
+												<f:selectItem
+													itemLabel="#{GridViewController.holder.assessment.items[1]}"
+													itemValue="#{GridViewController.holder.assessment.items[1]}" />
+												<f:selectItem
+													itemLabel="#{GridViewController.holder.assessment.items[2]}"
+													itemValue="#{GridViewController.holder.assessment.items[2]}" />
+												<f:selectItem
+													itemLabel="#{GridViewController.holder.assessment.items[3]}"
+													itemValue="#{GridViewController.holder.assessment.items[3]}" />
+											</p:selectOneRadio>
+											<p:selectBooleanCheckbox
+												value="#{reflectiveAssessment.isLearningGoal}">
+												<p:ajax event="change"
+													listener="#{GridViewController.handleChange}" />
+											</p:selectBooleanCheckbox>
+											<h:outputText value="Lernziel?" />
+											</div>
+										</div>
+										<br />
+									</ui:repeat>
+								</div>
+							</p:panel>
+					</p:panel>
+				</p:tab>
+			</p:tabView>
+		</h:form>
 	</h:body>
 </f:view>

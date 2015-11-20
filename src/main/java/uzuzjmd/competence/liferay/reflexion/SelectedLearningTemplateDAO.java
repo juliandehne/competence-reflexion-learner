@@ -21,11 +21,12 @@ public class SelectedLearningTemplateDAO {
 	 * 
 	 * @param selectedLearningTemplate
 	 */
-	public static synchronized void persist(String selectedLearningTemplate) {
+	public static synchronized boolean persist(String selectedLearningTemplate) {
 
 		Client client = com.sun.jersey.api.client.Client.create();
 		WebResource webResource = client.resource(SOAUtil.getRestserverUrl()
 				+ "/competences/xml/learningtemplates/add");
+		boolean result = false;
 		try {
 			try {
 				webResource
@@ -36,6 +37,7 @@ public class SelectedLearningTemplateDAO {
 						.queryParam("selectedTemplate",
 								selectedLearningTemplate)
 						.accept(MediaType.APPLICATION_XML).post();
+				result = true;
 			} catch (PortalException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -52,6 +54,8 @@ public class SelectedLearningTemplateDAO {
 		} finally {
 			client.destroy();
 		}
+		
+		return result;
 	}
 
 	public static synchronized StringList findAll()
@@ -81,10 +85,11 @@ public class SelectedLearningTemplateDAO {
 		return result;
 	}
 
-	public static synchronized void delete(String selectedLearningTemplate) {
+	public static synchronized boolean delete(String selectedLearningTemplate) {
 		Client client = com.sun.jersey.api.client.Client.create();
 		WebResource webResource = client.resource(SOAUtil.getRestserverUrl()
 				+ "/competences/xml/learningtemplates/delete");
+		boolean result = false;
 		try {
 			try {
 				webResource
@@ -95,6 +100,7 @@ public class SelectedLearningTemplateDAO {
 						.queryParam("selectedTemplate",
 								selectedLearningTemplate)
 						.accept(MediaType.APPLICATION_XML).post();
+				result = true;
 			} catch (PortalException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -111,6 +117,7 @@ public class SelectedLearningTemplateDAO {
 		} finally {
 			client.destroy();
 		}
-
+		
+		return result;
 	}
 }
