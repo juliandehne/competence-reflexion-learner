@@ -11,16 +11,13 @@ public class SOAUtil {
 	 * @return
 	 */
 	public static String getRestserverUrl() {
-
-		return "http://localhost:8084";
-//		return "http://fleckenroller.cs.uni-potsdam.de/app/competence-servlet/competence";
-//		try {
-//			String competenceRestServerUrl = GetterUtil.getString(PortletProps
-//					.get("competenceRestServerUrl"));
-//			return competenceRestServerUrl;
-//		} catch (Exception ex) {
-//			System.err.println(ex);
-//			return "http://fleckenroller.cs.uni-potsdam.de/app/competence-servlet/competence";
-//		}
+		try {
+			String competenceRestServerUrl = GetterUtil.getString(PortletProps
+					.get("competenceRestServerUrl"));
+			return competenceRestServerUrl;
+		} catch (Exception ex) {
+			System.err.println(ex);
+			return "http://fleckenroller.cs.uni-potsdam.de/app/competence-servlet/competence";
+		}
 	}
 }
