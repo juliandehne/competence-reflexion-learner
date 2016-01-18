@@ -119,12 +119,12 @@ public class LearningTemplates implements Serializable {
 		//learningTemplates = new ArrayList<String>(new LinkedHashSet<String>(learningTemplates));		
 	}
 
-	public void deleteTemplate1(String todelete) {
-		if(SelectedLearningTemplateDAO.delete(todelete)){
-			learningTemplates.remove(todelete);
+	public void deleteTemplate1(String toDelete) {
+		if(SelectedLearningTemplateDAO.delete(toDelete)){
+			learningTemplates.remove(toDelete);
 		}
 //		while(learningTemplates.contains(selectedCompetence)) {
-//			learningTemplates.remove(todelete);
+//			learningTemplates.remove(toDelete);
 //		}				
 	}
 

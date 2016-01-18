@@ -15,6 +15,7 @@ import com.sun.jersey.api.client.UniformInterfaceException;
 import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.filter.LoggingFilter;
 
+@SuppressWarnings("Duplicates")
 public class SuggestedCompetenceGridDAO {
 
 
@@ -30,7 +31,7 @@ public class SuggestedCompetenceGridDAO {
 		
 		Client client = com.sun.jersey.api.client.Client.create();
 		WebResource webResource = client.resource(SOAUtil.getRestserverUrl()
-				+ "/competences/xml/learningtemplates/gridview");
+				+ "/competences/learningtemplates/gridview");
 		SuggestedCompetenceGrid result = null;
 		try {
 			result = webResource
@@ -66,7 +67,7 @@ public class SuggestedCompetenceGridDAO {
 		Client client = com.sun.jersey.api.client.Client.create();
 		client.addFilter(new LoggingFilter(System.out));
 		WebResource webResource = client.resource(SOAUtil.getRestserverUrl()
-				+ "/competences/xml/learningtemplates/gridview/update");
+				+ "/competences/learningtemplates/gridview/update");
 		try {
 			webResource
 					.queryParam("userId",
@@ -75,7 +76,7 @@ public class SuggestedCompetenceGridDAO {
 							ContextUtil.getGroup().getGroupId() + "")
 					.type(MediaType.APPLICATION_XML).accept(MediaType.APPLICATION_XML)
 					.post(ReflectiveAssessmentsListHolder.class, holder);
-			
+
 		} catch (UniformInterfaceException e) {
 			e.printStackTrace();
 		} catch (ClientHandlerException e) {

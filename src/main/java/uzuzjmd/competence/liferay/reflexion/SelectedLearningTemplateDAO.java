@@ -25,8 +25,14 @@ public class SelectedLearningTemplateDAO {
 
 		Client client = com.sun.jersey.api.client.Client.create();
 		WebResource webResource = client.resource(SOAUtil.getRestserverUrl()
-				+ "/competences/xml/learningtemplates/add");
+				+ "/competences/learningtemplates/selected/add");
 		boolean result = false;
+		result = persistLearningTemplateSelection(selectedLearningTemplate, client, webResource, result);
+
+		return result;
+	}
+
+	private static boolean persistLearningTemplateSelection(String selectedLearningTemplate, Client client, WebResource webResource, boolean result) {
 		try {
 			try {
 				webResource
@@ -54,7 +60,6 @@ public class SelectedLearningTemplateDAO {
 		} finally {
 			client.destroy();
 		}
-		
 		return result;
 	}
 
@@ -63,7 +68,7 @@ public class SelectedLearningTemplateDAO {
 			PortalException, SystemException {
 		Client client = com.sun.jersey.api.client.Client.create();
 		WebResource webResource = client.resource(SOAUtil.getRestserverUrl()
-				+ "/competences/xml/learningtemplates/selected");
+				+ "/competences/learningtemplates/selected");
 		
 		System.out.println("FETCHING FROM_: "+webResource.getURI());
 
@@ -88,36 +93,10 @@ public class SelectedLearningTemplateDAO {
 	public static synchronized boolean delete(String selectedLearningTemplate) {
 		Client client = com.sun.jersey.api.client.Client.create();
 		WebResource webResource = client.resource(SOAUtil.getRestserverUrl()
-				+ "/competences/xml/learningtemplates/delete");
+				+ "/competences/learningtemplates/selected/delete");
 		boolean result = false;
-		try {
-			try {
-				webResource
-						.queryParam("userId",
-								ContextUtil.getUserLoggedIn().getLogin() + "")
-						.queryParam("groupId",
-								ContextUtil.getGroup().getGroupId() + "")
-						.queryParam("selectedTemplate",
-								selectedLearningTemplate)
-						.accept(MediaType.APPLICATION_XML).post();
-				result = true;
-			} catch (PortalException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (SystemException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		} catch (UniformInterfaceException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ClientHandlerException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			client.destroy();
-		}
-		
+		result = persistLearningTemplateSelection(selectedLearningTemplate, client, webResource, result);
+
 		return result;
 	}
 }
