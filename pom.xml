@@ -4,7 +4,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>uzuzjmd.competence</groupId>
-	<artifactId>reflexion</artifactId>
+	<artifactId>reflexion-learner</artifactId>
 	<packaging>war</packaging>
 	<name>Competence-Reflexion Portlet</name>
 	<version>1.0</version>
@@ -54,6 +54,12 @@
 				<version>2.4</version>
 				<configuration>
 					<webappDirectory>${webappDirectory}</webappDirectory>
+					<attachClasses>true</attachClasses>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-war-plugin</artifactId>
+				<configuration>
 					<attachClasses>true</attachClasses>
 				</configuration>
 			</plugin>
@@ -208,7 +214,7 @@
 				<liferay.app.server.portal.dir>/opt/up/liferay6/6.2.1/bundles/tomcat-7.0.42/webapps/ROOT</liferay.app.server.portal.dir>
 			</properties>
 		</profile>
-		
+
 		<profile>
 			<id>anh-maven-profil</id>
 			<properties>
@@ -226,16 +232,25 @@
 			<properties>
 				<liferay.version>6.2.3</liferay.version>
 				<liferay.maven.plugin.version>6.2.3</liferay.maven.plugin.version>
-		
 				<liferay.auto.deploy.dir>/opt/data/liferay-portal-6.2-ce-ga4/deploy</liferay.auto.deploy.dir>
-		
 				<liferay.app.server.deploy.dir>/opt/data/liferay-portal-6.2-ce-ga4/tomcat-7.0.42/webapps</liferay.app.server.deploy.dir>
-		
 				<liferay.app.server.lib.global.dir>/opt/data/liferay-portal-6.2-ce-ga4/tomcat-7.0.42/lib/ext</liferay.app.server.lib.global.dir>
-		
 				<liferay.app.server.portal.dir>/opt/data/liferay-portal-6.2-ce-ga4/tomcat-7.0.42/webapps/ROOT</liferay.app.server.portal.dir>
 			</properties>
 		</profile>
+
+		<profile>
+			<id>julians-maven-profil-2</id>
+			<properties>
+				<liferay.version>6.2.1</liferay.version>
+				<liferay.maven.plugin.version>6.2.1</liferay.maven.plugin.version>
+				<liferay.auto.deploy.dir>C:\dev\liferay-portal-tomcat-6.2-ce-ga4-20150416163831865\liferay-portal-6.2-ce-ga4\deploy</liferay.auto.deploy.dir>
+				<liferay.app.server.deploy.dir>C:\dev\liferay-portal-tomcat-6.2-ce-ga4-20150416163831865\liferay-portal-6.2-ce-ga4\tomcat-7.0.42\webapps</liferay.app.server.deploy.dir>
+				<liferay.app.server.lib.global.dir>C:\dev\liferay-portal-tomcat-6.2-ce-ga4-20150416163831865\liferay-portal-6.2-ce-ga4\tomcat-7.0.42\lib\ext</liferay.app.server.lib.global.dir>
+				<liferay.app.server.portal.dir>C:\dev\liferay-portal-tomcat-6.2-ce-ga4-20150416163831865\liferay-portal-6.2-ce-ga4\tomcat-7.0.42\webapps\ROOT</liferay.app.server.portal.dir>
+			</properties>
+		</profile>
+
 	</profiles>
 
 
