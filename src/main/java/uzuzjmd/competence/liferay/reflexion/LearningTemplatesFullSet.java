@@ -12,11 +12,14 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.ws.rs.core.MediaType;
 
+import org.apache.commons.collections.CollectionUtils;
+
 import uzuzjmd.competence.liferay.util.SOAUtil;
 import uzuzjmd.competence.shared.StringList;
 
 import com.google.common.base.Predicates;
 import com.google.common.collect.Collections2;
+import com.google.common.collect.Iterables;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.WebResource;
 
@@ -68,9 +71,12 @@ public class LearningTemplatesFullSet implements Serializable{
 				.resource(SOAUtil.getRestserverUrl() + "/competences/learningtemplates");
 		StringList result = webResource.accept(MediaType.APPLICATION_XML)
 				.get(StringList.class);
-		for (String template : result.getData()) {
-			learningTemplates.add(template);
-		}
+//		for (String template : result.getData()) {
+//			learningTemplates.add(template);
+//		}
+		final List<String> tmp = result == null ? new ArrayList<String>() : result.getData();
+		learningTemplates = CollectionUtils.isEmpty(tmp) ? new ArrayList<String>() : tmp;
+		Iterables.removeIf(learningTemplates, Predicates.isNull());
 	}
 
 	private List<String> getNotSelectedTemplate() {
