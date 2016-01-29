@@ -87,8 +87,10 @@
 								id="selectLearningTemplateMenu">
 								<f:selectItems value="#{LearningTemplates.learningTemplates}" />
 	<!-- 							<f:selectItem itemLabel="test" itemValue="test"></f:selectItem> -->
-								<p:ajax update="learningProjectGridPanel" listener="#{GridViewController.refreshView}"/>
-								<p:ajax update="learningProjectGridPanel" listener="#{LearningTemplates.handleChange}"/>
+								<p:ajax update="learningProjectGridPanel" listener="#{GridViewController.refreshView}"
+										onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()"/>
+								<p:ajax update="learningProjectGridPanel" listener="#{LearningTemplates.handleChange}"
+										onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()"/>
 							</p:selectOneMenu>
 						</div>
 
@@ -96,7 +98,7 @@
 						<p:scrollPanel mode="native" style="width:100%;height:100%" id="competencenGridView">
 							<div class="table-responsive" id="suggestedCompetenceGrid">
 
-								<table class="table table-bordered table-hover table-condensed">
+								<table class="table table-bordered table-hover table-condensed table-striped">
 
 									<thead>
 										<tr>
@@ -117,25 +119,39 @@
 											listener="#{LearningTemplates.updateGrid}" />
 										<tr>
 											<td>#{varStatus.index +1}</td>
-											<td><h:outputText class="suggestedCompetenceRowHeader}"
-													value="#{suggestedCompetenceRow.suggestedCompetenceRowHeader}"></h:outputText>
+											<td><b><h:outputText class="suggestedCompetenceRowHeader}"
+													value="#{suggestedCompetenceRow.suggestedCompetenceRowHeader}"></h:outputText></b>
 											</td>
 
 											<ui:repeat var="suggestedCompetenceColumn"
 												value="#{suggestedCompetenceRow.suggestedCompetenceColumns}">
 												<!-- 										<span class="icon-arrow-right"></span> -->
-												<td><p:commandLink
+												<td>
+													<p:commandLink
 														action="#{GridViewController.update(suggestedCompetenceColumn)}"
 														update="@(.reflexionSelection)">
 														<div class="suggestedCompetenceCluster">
-															<h:outputText class="competenceGridEntry"
-																value="#{suggestedCompetenceColumn.testOutput}" />
-															<p:progressBar
-																value="#{suggestedCompetenceColumn.progressInPercent}"
-																labelTemplate="#{suggestedCompetenceColumn.progressInPercent}%"
-																displayOnly="true" style="width:80px"></p:progressBar>
+														<div class="ui-grid-row">
+															<span class="ui-grid-col-7">
+																<h:outputText class="competenceGridEntry"
+																	value="#{suggestedCompetenceColumn.testOutput}" />
+															</span>
+															<span class="ui-grid-col-5">
+																<p:commandButton value="einschätzen" 
+																	icon="ui-icon-arrow-1-s" type="button"
+																	style="font-size: 12px; font-style: italic;"/>
+															</span>
 														</div>
-													</p:commandLink></td>
+															<div class="ui-grid-row ui-grid-col-5" style="margin-top:5px;">
+																<p:progressBar
+																	value="#{suggestedCompetenceColumn.progressInPercent}"
+																	labelTemplate="#{suggestedCompetenceColumn.progressInPercent}%"
+																	displayOnly="true" style="width:100%"></p:progressBar>
+																
+															</div>
+														</div>
+													</p:commandLink>
+												</td>
 											</ui:repeat>
 										</tr>
 									</ui:repeat>

@@ -54,7 +54,7 @@ public class LearningTemplatesFullSet implements Serializable{
 		result.addAll(tmp);
 		
 		if(result.size() == 0) {
-			FacesContext.getCurrentInstance().addMessage( "autocompleteMessage", new FacesMessage(FacesMessage.SEVERITY_INFO, "Info: ", "Es gibt kein Lernprojekt,den Sie auswählen können!"));
+			FacesContext.getCurrentInstance().addMessage( "autocompleteMessage", new FacesMessage(FacesMessage.SEVERITY_INFO, "Info: ", "Es stellt kein Lernprojekt zur Verfügung!"));
 		}
 		return result;		
 	}
