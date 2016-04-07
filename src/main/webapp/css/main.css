@@ -13,3 +13,12 @@
 	-moz-border-radius: 20px;
 	-webkit-border-radius: 20px;
 }
+
+
+.ui-autocomplete-input {
+	margin-bottom: 0px !important;
+}
+
+.marginTop {
+	margin-top: 10px;
+}
