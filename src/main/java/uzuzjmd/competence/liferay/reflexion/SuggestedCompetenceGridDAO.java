@@ -4,8 +4,8 @@ import javax.ws.rs.core.MediaType;
 
 import uzuzjmd.competence.liferay.util.ContextUtil;
 import uzuzjmd.competence.liferay.util.SOAUtil;
-import uzuzjmd.competence.shared.ReflectiveAssessmentsListHolder;
-import uzuzjmd.competence.shared.SuggestedCompetenceGrid;
+import uzuzjmd.competence.shared.assessment.ReflectiveAssessmentsListHolder;
+import uzuzjmd.competence.shared.learningtemplate.SuggestedCompetenceGrid;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;

@@ -4,7 +4,7 @@ import javax.ws.rs.core.MediaType;
 
 import uzuzjmd.competence.liferay.util.ContextUtil;
 import uzuzjmd.competence.liferay.util.SOAUtil;
-import uzuzjmd.competence.shared.StringList;
+import datastructures.lists.StringList;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;

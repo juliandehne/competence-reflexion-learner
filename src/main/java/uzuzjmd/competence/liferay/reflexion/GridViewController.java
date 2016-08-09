@@ -7,8 +7,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
-import uzuzjmd.competence.shared.ReflectiveAssessmentsListHolder;
-import uzuzjmd.competence.shared.SuggestedCompetenceColumn;
+import uzuzjmd.competence.shared.assessment.ReflectiveAssessmentsListHolder;
+import uzuzjmd.competence.shared.learningtemplate.SuggestedCompetenceColumn;
 
 @ManagedBean(name = "GridViewController")
 @ViewScoped

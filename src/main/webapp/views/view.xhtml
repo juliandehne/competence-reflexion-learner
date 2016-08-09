@@ -20,7 +20,7 @@
 				<p:ajax event="tabChange" update="learningProjectTabView" listener="#{LearningTemplates.onTabChange}" 
 					onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()"/>
 				<p:tab id="LernprojekteTab" title="Lernprojekte">
-					<H1>Meine Lernprojekte</H1>
+					<h1>Meine Lernprojekte</h1>
 					<p:dataTable var="learningProject" id="learningProjectDataList"
 						value="#{LearningTemplates.learningTemplates}" paginator="true"
 						rows="10" type="definition">
@@ -75,10 +75,10 @@
 				
 				
 				<p:tab id="learningProjectGridTab" title="Selbsteinschätzung">
-					<H1>Selbsteinschätzung</H1>
+					<h1>Selbsteinschätzung</h1>
 
 					<!-- 		Hier wird das Dropdown für die Lernprojekte konfiguriert -->
-					<H4>Lernprojekte</H4>
+					<h4>Lernprojekte</h4>
 					
 					<p:panel id="learningProjectGridPanel">
 						<div id="learningTemplateSelection">
@@ -166,7 +166,7 @@
 						<!-- Hier werden bei Button-Click dynamisch Assessment-Fragen angezeigt process="@(.reflexionSelection)" -->
 							<p:panel id="reflexionSelection" styleClass="reflexionSelection">
 								<div id="assessmentsForSelected" class="ui-grid ui-grid-responsive">
-									<H2>#{GridViewController.holder.suggestedMetaCompetence}</H2>
+									<h2>#{GridViewController.holder.suggestedMetaCompetence}</h2>
 									<br />
 									<ui:repeat var="reflectiveAssessment"
 										value="#{GridViewController.holder.reflectiveAssessmentList}">
