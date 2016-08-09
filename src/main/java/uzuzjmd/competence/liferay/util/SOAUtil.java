@@ -10,14 +10,15 @@ public class SOAUtil {
 	 * 
 	 * @return
 	 */
-	public static String getRestserverUrl() {
+	public static final String getRestserverUrl() {
+		String competenceRestServerUrl = "";
 		try {
-			String competenceRestServerUrl = GetterUtil.getString(PortletProps
-					.get("competenceRestServerUrl"));
-			return competenceRestServerUrl;
+			competenceRestServerUrl = GetterUtil.getString(PortletProps
+					.get("competenceRestServerUrl"));			
 		} catch (Exception ex) {
-			System.err.println(ex);
-			return "http://fleckenroller.cs.uni-potsdam.de/app/competence-servlet/competence";
+			System.err.println(ex);			
 		}
+		System.out.println("using: " + competenceRestServerUrl);
+		return competenceRestServerUrl;
 	}
 }
